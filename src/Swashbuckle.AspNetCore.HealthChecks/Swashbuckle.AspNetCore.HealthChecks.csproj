@@ -1,0 +1,45 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net6.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+    </PropertyGroup>
+
+    <PropertyGroup>
+        <GenerateDocumentationFile>true</GenerateDocumentationFile>
+        <Product>Swashbuckle.AspNetCore.HealthChecks</Product>
+        <Description>Provides Swashbuckle support for health checks.</Description>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <PackageReference Include="AsyncFixer" Version="1.6.0">
+        <PrivateAssets>all</PrivateAssets>
+        <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      </PackageReference>
+      <PackageReference Include="Meziantou.Analyzer" Version="1.0.740">
+        <PrivateAssets>all</PrivateAssets>
+        <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      </PackageReference>
+      <PackageReference Include="Roslynator.CodeAnalysis.Analyzers" Version="4.1.1">
+        <PrivateAssets>all</PrivateAssets>
+        <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      </PackageReference>
+      <PackageReference Include="SecurityCodeScan.VS2019" Version="5.6.7">
+        <PrivateAssets>all</PrivateAssets>
+        <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      </PackageReference>
+      <PackageReference Include="StyleCop.Analyzers" Version="1.2.0-beta.435">
+        <PrivateAssets>all</PrivateAssets>
+        <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      </PackageReference>
+      <PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <AdditionalFiles Include="..\..\StyleCop.json">
+        <Link>StyleCop.json</Link>
+      </AdditionalFiles>
+    </ItemGroup>
+
+</Project>

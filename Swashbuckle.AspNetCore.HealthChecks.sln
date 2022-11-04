@@ -1,0 +1,22 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Swashbuckle.AspNetCore.HealthChecks", "src\Swashbuckle.AspNetCore.HealthChecks\Swashbuckle.AspNetCore.HealthChecks.csproj", "{678F5C4D-017E-4F66-94CE-2517F57D159E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SampleWebApplication", "samples\SampleWebApplication\SampleWebApplication.csproj", "{BBB686F0-0191-4453-A828-3F329C21131A}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{678F5C4D-017E-4F66-94CE-2517F57D159E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{678F5C4D-017E-4F66-94CE-2517F57D159E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{678F5C4D-017E-4F66-94CE-2517F57D159E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{678F5C4D-017E-4F66-94CE-2517F57D159E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BBB686F0-0191-4453-A828-3F329C21131A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BBB686F0-0191-4453-A828-3F329C21131A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BBB686F0-0191-4453-A828-3F329C21131A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BBB686F0-0191-4453-A828-3F329C21131A}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
