@@ -23,8 +23,9 @@ internal class HealthCheckApiDescriptionProvider : IApiDescriptionProvider
         IModelMetadataProvider modelMetadataProvider,
         EndpointDataSource endpointDataSource)
     {
-        _modelMetadataProvider = modelMetadataProvider;
-        _endpointDataSource = endpointDataSource;
+        _modelMetadataProvider =
+            modelMetadataProvider ?? throw new ArgumentNullException(nameof(modelMetadataProvider));
+        _endpointDataSource = endpointDataSource ?? throw new ArgumentNullException(nameof(endpointDataSource));
     }
 
     /// <inheritdoc />
@@ -53,10 +54,10 @@ internal class HealthCheckApiDescriptionProvider : IApiDescriptionProvider
 
     private static string GetRelativePath(RouteEndpoint endpoint)
     {
-        return string.Join('/', endpoint.RoutePattern.PathSegments.Select(GetSegmentText));
+        return string.Join('/', endpoint.RoutePattern.PathSegments.Select(GetLiteralSegmentText));
     }
 
-    private static string GetSegmentText(RoutePatternPathSegment segment)
+    private static string GetLiteralSegmentText(RoutePatternPathSegment segment)
     {
         return string.Join(
             '/',

@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Mvc.ApiExplorer;
-using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
 using Microsoft.OpenApi.Models;
 using Swashbuckle.AspNetCore.HealthChecks.ApiExplorer;
@@ -12,6 +11,15 @@ namespace Swashbuckle.AspNetCore.HealthChecks;
 /// </summary>
 internal class SwaggerGenOptionsConfiguration : IConfigureOptions<SwaggerGenOptions>
 {
+    private readonly HealthCheckApiExplorerOptions _apiExplorerOptions;
+
+    public SwaggerGenOptionsConfiguration(IOptions<HealthCheckApiExplorerOptions> options)
+    {
+        ArgumentNullException.ThrowIfNull(options);
+
+        _apiExplorerOptions = options.Value;
+    }
+
     /// <summary>
     /// Invoked to configure a <see cref="SwaggerGenOptions"/> instance.
     /// </summary>
@@ -39,5 +47,14 @@ internal class SwaggerGenOptionsConfiguration : IConfigureOptions<SwaggerGenOpti
         // Prevent performance problem when returning standard HealthReport
         // See https://stackoverflow.com/a/67826291/260213
         options.MapType<Exception>(() => new OpenApiSchema { Type = "object" });
+
+        if (_apiExplorerOptions.CreateHealthCheckOpenApiDocument)
+        {
+            if (string.IsNullOrWhiteSpace(_apiExplorerOptions.HealthCheckOpenApiDocumentName))
+            {
+                throw new InvalidOperationException(
+                    "OpenApiDocumentName must be provided if CreateOpenApiDocument is specified");
+            }
+        }
     }
 }

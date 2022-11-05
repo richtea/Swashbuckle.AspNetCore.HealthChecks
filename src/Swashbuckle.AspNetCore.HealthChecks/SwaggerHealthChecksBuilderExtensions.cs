@@ -4,6 +4,7 @@ using Microsoft.Extensions.Options;
 using Swashbuckle.AspNetCore.HealthChecks;
 using Swashbuckle.AspNetCore.HealthChecks.ApiExplorer;
 using Swashbuckle.AspNetCore.SwaggerGen;
+using Swashbuckle.AspNetCore.SwaggerUI;
 
 // ReSharper disable once CheckNamespace
 namespace Microsoft.Extensions.DependencyInjection;
@@ -17,8 +18,9 @@ public static class SwaggerHealthChecksBuilderExtensions
     /// Adds custom API descriptions support to the specified <see cref="IServiceCollection"/>.
     /// </summary>
     /// <param name="builder">The health checks builder.</param>
+    /// <param name="configureOptions">A callback to configure the <see cref="HealthCheckApiExplorerOptions"/>.</param>
     /// <returns>The <see cref="IHealthChecksBuilder"/>.</returns>
-    public static IHealthChecksBuilder AddSwagger(this IHealthChecksBuilder builder)
+    public static IHealthChecksBuilder AddOpenApi(this IHealthChecksBuilder builder, Action<HealthCheckApiExplorerOptions>? configureOptions = null)
     {
         ArgumentNullException.ThrowIfNull(builder);
 
@@ -28,6 +30,33 @@ public static class SwaggerHealthChecksBuilderExtensions
         builder.Services.TryAddEnumerable(
             ServiceDescriptor.Transient<IConfigureOptions<SwaggerGenOptions>, SwaggerGenOptionsConfiguration>());
 
+        builder.Services.TryAddEnumerable(
+            ServiceDescriptor.Transient<IPostConfigureOptions<SwaggerGeneratorOptions>, SwaggerGeneratorOptionsPostConfiguration>());
+
+        builder.Services.TryAddEnumerable(
+            ServiceDescriptor.Transient<IPostConfigureOptions<SwaggerUIOptions>, SwaggerUIOptionsPostConfiguration>());
+
+        if (configureOptions != null)
+        {
+            builder.Services.ConfigureHealthCheckApiExplorer(configureOptions);
+        }
+
         return builder;
+    }
+
+    /// <summary>
+    /// Configures ApiExplorer options for the health check endpoints.
+    /// </summary>
+    /// <param name="services">The service collection.</param>
+    /// <param name="configureOptions">A callback to configure the <see cref="HealthCheckApiExplorerOptions"/>.</param>
+    /// <returns>A reference to the service collection, for chaining.</returns>
+    public static IServiceCollection ConfigureHealthCheckApiExplorer(
+        this IServiceCollection services,
+        Action<HealthCheckApiExplorerOptions> configureOptions)
+    {
+        ArgumentNullException.ThrowIfNull(services);
+
+        services.Configure(configureOptions);
+        return services;
     }
 }
