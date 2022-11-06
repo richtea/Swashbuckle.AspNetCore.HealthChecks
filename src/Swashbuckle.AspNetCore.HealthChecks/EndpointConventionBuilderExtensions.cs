@@ -17,7 +17,7 @@ public static class EndpointConventionBuilderExtensions
     /// <param name="responseType">The <see cref="Type"/> that is returned by the health check endpoint.</param>
     /// <param name="configureMetadata">A callback to configure the endpoint metadata.</param>
     /// <returns>The <see cref="IEndpointConventionBuilder"/>.</returns>
-    public static IEndpointConventionBuilder WithApiDescription(
+    public static IEndpointConventionBuilder WithOpenApi(
         this IEndpointConventionBuilder builder,
         Type? responseType = null,
         Action<HealthCheckDescriptionMetadata>? configureMetadata = null)
@@ -49,10 +49,10 @@ public static class EndpointConventionBuilderExtensions
     /// <param name="builder">The endpoint builder.</param>
     /// <param name="configureMetadata">A callback to configure the endpoint metadata.</param>
     /// <returns>The <see cref="IEndpointConventionBuilder"/>.</returns>
-    public static IEndpointConventionBuilder WithApiDescription<T>(
+    public static IEndpointConventionBuilder WithOpenApi<T>(
         this IEndpointConventionBuilder builder,
         Action<HealthCheckDescriptionMetadata>? configureMetadata = null)
     {
-        return builder.WithApiDescription(typeof(T), configureMetadata);
+        return builder.WithOpenApi(typeof(T), configureMetadata);
     }
 }

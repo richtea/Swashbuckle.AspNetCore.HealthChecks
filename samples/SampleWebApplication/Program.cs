@@ -1,3 +1,4 @@
+using Microsoft.Extensions.Diagnostics.HealthChecks;
 using Swashbuckle.AspNetCore.HealthChecks;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -5,18 +6,15 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 
 builder.Services.AddControllers();
+
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen(
-    c =>
+builder.Services.AddSwaggerGen();
+builder.Services.AddHealthChecks().AddOpenApi(
+    options =>
     {
-        c.DocInclusionPredicate(
-            (docName, apiDescription) =>
-            {
-                return apiDescription.GroupName == null || apiDescription.GroupName == docName;
-            });
+        options.CreateHealthCheckOpenApiDocument = true;
     });
-builder.Services.AddHealthChecks().AddSwagger();
 
 var app = builder.Build();
 
@@ -31,13 +29,13 @@ app.UseHttpsRedirection();
 
 app.UseAuthorization();
 
-app.MapHealthChecks("/healthz").WithApiDescription(
-    metadata =>
-    {
-        metadata.Summary = "Returns information about the health of the system";
-        metadata.DisplayName = "Health Check";
-        //metadata.GroupName = "HealthChecks";
-    });
+app.MapHealthChecks("/healthz")
+    .WithOpenApi<HealthReport>(
+        metadata =>
+        {
+            metadata.Summary = "Returns information about the health of the system";
+        });
 app.MapControllers();
 
 app.Run();
+

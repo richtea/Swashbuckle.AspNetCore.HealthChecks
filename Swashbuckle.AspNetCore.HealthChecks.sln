@@ -4,6 +4,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Swashbuckle.AspNetCore.Heal
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SampleWebApplication", "samples\SampleWebApplication\SampleWebApplication.csproj", "{BBB686F0-0191-4453-A828-3F329C21131A}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Swashbuckle.AspNetCore.HealthChecks.Tests", "tests\Swashbuckle.AspNetCore.HealthChecks.Tests\Swashbuckle.AspNetCore.HealthChecks.Tests.csproj", "{EAEBEAA3-3A41-4EA3-95E5-395BAA054285}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{98EA63AA-1477-4191-B2BF-AFAA11BA229A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -18,5 +22,12 @@ Global
 		{BBB686F0-0191-4453-A828-3F329C21131A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BBB686F0-0191-4453-A828-3F329C21131A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BBB686F0-0191-4453-A828-3F329C21131A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EAEBEAA3-3A41-4EA3-95E5-395BAA054285}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EAEBEAA3-3A41-4EA3-95E5-395BAA054285}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EAEBEAA3-3A41-4EA3-95E5-395BAA054285}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EAEBEAA3-3A41-4EA3-95E5-395BAA054285}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{EAEBEAA3-3A41-4EA3-95E5-395BAA054285} = {98EA63AA-1477-4191-B2BF-AFAA11BA229A}
 	EndGlobalSection
 EndGlobal
