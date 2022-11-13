@@ -16,18 +16,7 @@ public class SwaggerTests
     [Fact]
     public async Task swagger_contains_default_values()
     {
-        var host = await CreateTestHostBuilder(
-                options =>
-                {
-                    options.CreateHealthCheckOpenApiDocument = true;
-                },
-                endpoints =>
-                {
-                    endpoints.MapHealthChecks("/healthz")
-                        .WithOpenApi<string>();
-                })
-            .StartAsync();
-        ;
+        var host = await CreateTestHostBuilder().StartAsync();
 
         var client = host.GetTestClient();
         var response = await client.GetAsync("/swagger/health-checks/swagger.json");
@@ -53,11 +42,6 @@ public class SwaggerTests
                     options.CreateHealthCheckOpenApiDocument = true;
                     options.HealthCheckOpenApiDocumentInfo.Title = "Test title";
                     options.HealthCheckOpenApiDocumentInfo.Version = "Test version";
-                },
-                endpoints =>
-                {
-                    endpoints.MapHealthChecks("/healthz")
-                        .WithOpenApi<string>();
                 })
             .StartAsync();
 
@@ -77,10 +61,7 @@ public class SwaggerTests
     public async Task can_configure_summary_text()
     {
         var host = await CreateTestHostBuilder(
-                options =>
-                {
-                    options.CreateHealthCheckOpenApiDocument = true;
-                },
+                null,
                 endpoints =>
                 {
                     endpoints.MapHealthChecks("/healthz")
@@ -106,10 +87,7 @@ public class SwaggerTests
     public async Task can_configure_description()
     {
         var host = await CreateTestHostBuilder(
-                options =>
-                {
-                    options.CreateHealthCheckOpenApiDocument = true;
-                },
+                null,
                 endpoints =>
                 {
                     endpoints.MapHealthChecks("/healthz")
@@ -132,9 +110,19 @@ public class SwaggerTests
     }
 
     private static IHostBuilder CreateTestHostBuilder(
-        Action<HealthCheckApiExplorerOptions> configureOptions,
-        Action<IEndpointRouteBuilder> configureEndpoints)
+        Action<HealthCheckApiExplorerOptions>? configureOptions = null,
+        Action<IEndpointRouteBuilder>? configureEndpoints = null)
     {
+        configureOptions ??= options =>
+        {
+            options.CreateHealthCheckOpenApiDocument = true;
+        };
+
+        configureEndpoints ??= endpoints =>
+        {
+            endpoints.MapHealthChecks("/healthz").WithOpenApi<string>();
+        };
+        
         var host = new HostBuilder()
             .ConfigureWebHost(
                 webBuilder =>
