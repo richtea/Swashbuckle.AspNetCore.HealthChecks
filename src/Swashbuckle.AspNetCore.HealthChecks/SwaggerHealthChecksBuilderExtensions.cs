@@ -45,6 +45,26 @@ public static class SwaggerHealthChecksBuilderExtensions
     }
 
     /// <summary>
+    /// Adds custom API descriptions support to the specified <see cref="IServiceCollection"/>, and creates an OpenAPI
+    /// document.
+    /// </summary>
+    /// <param name="builder">The health checks builder.</param>
+    /// <param name="configureOptions">A callback to configure the <see cref="HealthCheckApiExplorerOptions"/>.</param>
+    /// <returns>The <see cref="IHealthChecksBuilder"/>.</returns>
+    public static IHealthChecksBuilder AddOpenApiDocument(
+        this IHealthChecksBuilder builder,
+        Action<HealthCheckApiExplorerOptions>? configureOptions = null)
+    {
+        void InnerConfigure(HealthCheckApiExplorerOptions options)
+        {
+            options.CreateHealthCheckOpenApiDocument = true;
+            configureOptions?.Invoke(options);
+        }
+
+        return builder.AddOpenApi(InnerConfigure);
+    }
+
+    /// <summary>
     /// Configures ApiExplorer options for the health check endpoints.
     /// </summary>
     /// <param name="services">The service collection.</param>

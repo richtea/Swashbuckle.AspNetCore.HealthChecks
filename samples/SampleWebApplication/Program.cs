@@ -10,11 +10,7 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-builder.Services.AddHealthChecks().AddOpenApi(
-    options =>
-    {
-        options.CreateHealthCheckOpenApiDocument = true;
-    });
+builder.Services.AddHealthChecks().AddOpenApiDocument();
 
 var app = builder.Build();
 
@@ -29,7 +25,7 @@ app.UseHttpsRedirection();
 
 app.UseAuthorization();
 
-app.MapHealthChecks("/healthz")
+app.MapHealthChecks("/api/healthz")
     .WithOpenApi<HealthReport>(
         metadata =>
         {

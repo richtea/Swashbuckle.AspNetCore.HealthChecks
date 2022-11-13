@@ -8,4 +8,10 @@ public static class JsonElementExtensions
     {
         return new JsonElementAssertions(instance);
     }
+
+    public static bool HasValue(this JsonElement element, string value)
+    {
+        return element.ValueKind == JsonValueKind.String &&
+            string.Equals(element.GetString(), value, StringComparison.Ordinal);
+    }
 }

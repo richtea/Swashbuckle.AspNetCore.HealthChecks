@@ -1,5 +1,8 @@
+using System.Diagnostics.CodeAnalysis;
+
 namespace Swashbuckle.AspNetCore.HealthChecks.Tests.Controllers;
 
+[ExcludeFromCodeCoverage]
 public class WeatherForecast
 {
     public DateTime Date { get; set; }

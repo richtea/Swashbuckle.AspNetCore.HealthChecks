@@ -18,8 +18,8 @@ public class SwaggerTests
     {
         var host = await CreateTestHostBuilder().StartAsync();
 
-        var client = host.GetTestClient();
-        var response = await client.GetAsync("/swagger/health-checks/swagger.json");
+        using var client = host.GetTestClient();
+        using var response = await client.GetAsync("/swagger/health-checks/swagger.json");
 
         response.StatusCode.Should().Be(HttpStatusCode.OK);
         var contentStream = await response.Content.ReadAsStreamAsync();
@@ -34,6 +34,26 @@ public class SwaggerTests
     }
 
     [Fact]
+    public async Task can_modify_default_openapi_document()
+    {
+        var host = await CreateTestHostBuilder(
+                options =>
+                {
+                    options.CreateHealthCheckOpenApiDocument = false;
+                })
+            .StartAsync();
+
+        using var client = host.GetTestClient();
+        using var response = await client.GetAsync("/swagger/v1/swagger.json");
+
+        response.StatusCode.Should().Be(HttpStatusCode.OK);
+        var contentStream = await response.Content.ReadAsStreamAsync();
+        var document = await JsonDocument.ParseAsync(contentStream);
+        document.RootElement.Should().HaveElement("$.paths['/healthz'].get");
+        document.RootElement.Should().HaveElement("$.paths['/WeatherForecast'].get");
+    }
+
+    [Fact]
     public async Task can_configure_document_info_properties()
     {
         var host = await CreateTestHostBuilder(
@@ -45,8 +65,8 @@ public class SwaggerTests
                 })
             .StartAsync();
 
-        var client = host.GetTestClient();
-        var response = await client.GetAsync("/swagger/health-checks/swagger.json");
+        using var client = host.GetTestClient();
+        using var response = await client.GetAsync("/swagger/health-checks/swagger.json");
 
         response.StatusCode.Should().Be(HttpStatusCode.OK);
         var contentStream = await response.Content.ReadAsStreamAsync();
@@ -55,6 +75,23 @@ public class SwaggerTests
             .Which.Should().HaveValue("Test title");
         document.RootElement.Should().HaveElement("$.info.version")
             .Which.Should().HaveValue("Test version");
+    }
+
+    [Fact]
+    public async Task can_configure_document_name()
+    {
+        var host = await CreateTestHostBuilder(
+                options =>
+                {
+                    options.CreateHealthCheckOpenApiDocument = true;
+                    options.HealthCheckOpenApiDocumentName = "test-doc-name";
+                })
+            .StartAsync();
+
+        using var client = host.GetTestClient();
+        using var response = await client.GetAsync("/swagger/test-doc-name/swagger.json");
+
+        response.StatusCode.Should().Be(HttpStatusCode.OK);
     }
 
     [Fact]
@@ -73,8 +110,8 @@ public class SwaggerTests
                 })
             .StartAsync();
 
-        var client = host.GetTestClient();
-        var response = await client.GetAsync("/swagger/health-checks/swagger.json");
+        using var client = host.GetTestClient();
+        using var response = await client.GetAsync("/swagger/health-checks/swagger.json");
 
         response.StatusCode.Should().Be(HttpStatusCode.OK);
         var contentStream = await response.Content.ReadAsStreamAsync();
@@ -99,14 +136,70 @@ public class SwaggerTests
                 })
             .StartAsync();
 
-        var client = host.GetTestClient();
-        var response = await client.GetAsync("/swagger/health-checks/swagger.json");
+        using var client = host.GetTestClient();
+        using var response = await client.GetAsync("/swagger/health-checks/swagger.json");
 
         response.StatusCode.Should().Be(HttpStatusCode.OK);
         var contentStream = await response.Content.ReadAsStreamAsync();
         var document = await JsonDocument.ParseAsync(contentStream);
         document.RootElement.Should().HaveElement("$.paths['/healthz'].get.description")
             .Which.Should().HaveValue("Test description");
+    }
+
+    [Fact]
+    public async Task can_set_operation_id()
+    {
+        var host = await CreateTestHostBuilder(
+                null,
+                endpoints =>
+                {
+                    endpoints.MapHealthChecks("/healthz")
+                        .WithOpenApi<string>(
+                            metadata =>
+                            {
+                                metadata.OperationId = "GET_HEALTHZ_CHECK";
+                            });
+                })
+            .StartAsync();
+
+        using var client = host.GetTestClient();
+        using var response = await client.GetAsync("/swagger/health-checks/swagger.json");
+
+        response.StatusCode.Should().Be(HttpStatusCode.OK);
+        var contentStream = await response.Content.ReadAsStreamAsync();
+        var document = await JsonDocument.ParseAsync(contentStream);
+        document.RootElement.Should().HaveElement("$.paths['/healthz'].get.operationId")
+            .Which.Should().HaveValue("GET_HEALTHZ_CHECK");
+    }
+
+    [Fact]
+    public async Task can_set_tags()
+    {
+        var host = await CreateTestHostBuilder(
+                null,
+                endpoints =>
+                {
+                    endpoints.MapHealthChecks("/healthz")
+                        .WithOpenApi<string>(
+                            metadata =>
+                            {
+                                metadata.Tags.Add("test_tag1");
+                                metadata.Tags.Add("test_tag2");
+                            });
+                })
+            .StartAsync();
+
+        using var client = host.GetTestClient();
+        using var response = await client.GetAsync("/swagger/health-checks/swagger.json");
+
+        response.StatusCode.Should().Be(HttpStatusCode.OK);
+        var contentStream = await response.Content.ReadAsStreamAsync();
+        var document = await JsonDocument.ParseAsync(contentStream);
+        document.RootElement.Should().HaveElement("$.paths['/healthz'].get.tags")
+            .Which.Should().BeAnArray()
+            .Which.Should().HaveCount(2)
+            .And.Contain(e => e.HasValue("test_tag1"))
+            .And.Contain(e => e.HasValue("test_tag2"));
     }
 
     private static IHostBuilder CreateTestHostBuilder(
@@ -122,7 +215,7 @@ public class SwaggerTests
         {
             endpoints.MapHealthChecks("/healthz").WithOpenApi<string>();
         };
-        
+
         var host = new HostBuilder()
             .ConfigureWebHost(
                 webBuilder =>
@@ -144,6 +237,7 @@ public class SwaggerTests
                             app =>
                             {
                                 app.UseSwagger();
+                                app.UseSwaggerUI();
                                 app.UseRouting();
                                 app.UseEndpoints(
                                     endpoints =>

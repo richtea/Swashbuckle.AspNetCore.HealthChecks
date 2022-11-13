@@ -1,6 +1,5 @@
 using System.Text.Json;
 using System.Text.Json.JsonDiffPatch;
-using System.Text.Json.Nodes;
 using FluentAssertions;
 using FluentAssertions.Execution;
 using FluentAssertions.Primitives;
@@ -93,19 +92,22 @@ public class JsonElementAssertions : ReferenceTypeAssertions<JsonElement, JsonEl
                 () => JsonSerializer.Serialize(expectedValue));
 
         return new AndConstraint<JsonElementAssertions>(this);
-        //
-        // ((object)Subject).Should().BeEquivalentTo(
-        //     expectedValue,
-        //     options =>
-        //     {
-        //         options.ComparingByMembers<JsonElement>();
-        //         options.ThrowingOnMissingMembers();
-        //         return options;
-        //     },
-        //     because,
-        //     becauseArgs);
-        //
-        // return new AndConstraint<JsonElementAssertions>(this);
+    }
+
+    public AndWhichConstraint<JsonElementAssertions, IEnumerable<JsonElement>> BeAnArray(
+        string because = "",
+        params object[] becauseArgs)
+    {
+        var success = Execute.Assertion
+            .BecauseOf(because, becauseArgs)
+            .ForCondition(Subject.ValueKind is JsonValueKind.Array)
+            .FailWith(
+                "Expected {0} to be an array{reason}, but it was a {1}",
+                () => JsonSerializer.Serialize(Subject),
+                () => Subject.ValueKind);
+
+        var arrayElements = success ? Subject.EnumerateArray().ToArray() : Enumerable.Empty<JsonElement>();
+        return new AndWhichConstraint<JsonElementAssertions, IEnumerable<JsonElement>>(this, arrayElements);
     }
 
     public AndWhichConstraint<JsonElementAssertions, IEnumerable<JsonElement>> HaveElements(

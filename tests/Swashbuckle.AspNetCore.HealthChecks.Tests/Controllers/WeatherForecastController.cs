@@ -1,3 +1,4 @@
+using System.Diagnostics.CodeAnalysis;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 
@@ -6,6 +7,7 @@ namespace Swashbuckle.AspNetCore.HealthChecks.Tests.Controllers;
 
 [ApiController]
 [Route("[controller]")]
+[ExcludeFromCodeCoverage]
 public class WeatherForecastController : ControllerBase
 {
     private static readonly string[] Summaries = new[]
