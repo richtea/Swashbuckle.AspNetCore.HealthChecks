@@ -1,6 +1,5 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
-using Microsoft.OpenApi.Models;
 using Swashbuckle.AspNetCore.HealthChecks.ApiExplorer;
 using Swashbuckle.AspNetCore.SwaggerGen;
 
@@ -42,11 +41,6 @@ internal class SwaggerGenOptionsConfiguration : IConfigureOptions<SwaggerGenOpti
             // SwaggerUI uses the tag to group operations - if none present, we need to provide a default value
             return descriptor.Metadata.Tags.Any() ? descriptor.Metadata.Tags : new[] { "HealthChecks" };
         };
-
-        // TODO: check we need this
-        // Prevent performance problem when returning standard HealthReport
-        // See https://stackoverflow.com/a/67826291/260213
-        options.MapType<Exception>(() => new OpenApiSchema { Type = "object" });
 
         if (_apiExplorerOptions.CreateHealthCheckOpenApiDocument)
         {

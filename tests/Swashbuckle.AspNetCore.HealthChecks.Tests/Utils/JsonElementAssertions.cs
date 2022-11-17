@@ -110,6 +110,21 @@ public class JsonElementAssertions : ReferenceTypeAssertions<JsonElement, JsonEl
         return new AndWhichConstraint<JsonElementAssertions, IEnumerable<JsonElement>>(this, arrayElements);
     }
 
+    public AndConstraint<JsonElementAssertions> BeAnObject(
+        string because = "",
+        params object[] becauseArgs)
+    {
+        var success = Execute.Assertion
+            .BecauseOf(because, becauseArgs)
+            .ForCondition(Subject.ValueKind is JsonValueKind.Object)
+            .FailWith(
+                "Expected {0} to be an object{reason}, but it was a {1}",
+                () => JsonSerializer.Serialize(Subject),
+                () => Subject.ValueKind);
+
+        return new AndConstraint<JsonElementAssertions>(this);
+    }
+
     public AndWhichConstraint<JsonElementAssertions, IEnumerable<JsonElement>> HaveElements(
         string jsonPath,
         OccurrenceConstraint occurrenceConstraint,
@@ -194,5 +209,34 @@ public class JsonElementAssertions : ReferenceTypeAssertions<JsonElement, JsonEl
         }
 
         return new AndWhichConstraint<JsonElementAssertions, JsonElement>(this, (JsonElement)element!);
+    }
+    public AndConstraint<JsonElementAssertions> NotHaveElement(
+        string jsonPath,
+        string because = "",
+        params object[] becauseArgs)
+    {   
+        ArgumentNullException.ThrowIfNull(jsonPath);
+        
+        var path = JsonPath.Parse(jsonPath);
+
+        var results = path.Evaluate(Subject);
+
+        var success = Execute.Assertion
+            .ForCondition(results.Error == null)
+            .BecauseOf(because, becauseArgs)
+            .FailWith("Path evaluation failed: {0}", results.Error!);
+
+        if (success)
+        {
+            var actual = results.Matches!.Count;
+            Execute.Assertion
+                .ForCondition(actual == 0)
+                .BecauseOf(because, becauseArgs)
+                .FailWith(
+                    "Expected {context:JsonElement} not to contain path {0}{reason}, but it was present",
+                    jsonPath);
+        }
+
+        return new AndConstraint<JsonElementAssertions>(this);
     }
 }
