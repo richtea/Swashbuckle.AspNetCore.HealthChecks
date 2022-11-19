@@ -68,6 +68,7 @@ app.MapHealthChecks(
     .WithOpenApi<HealthCheckReport>(
         metadata =>
         {
+            metadata.OperationId = "GET_healthz";
             metadata.Summary = "Returns information about the health of the system";
         });
 app.MapControllers();

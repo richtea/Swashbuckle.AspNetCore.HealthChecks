@@ -45,14 +45,14 @@ public static class EndpointConventionBuilderExtensions
     /// <summary>
     /// Adds an ApiExplorer description to a health check endpoint.
     /// </summary>
-    /// <typeparam name="T">The response type that is returned by the health check endpoint.</typeparam>
+    /// <typeparam name="TReport">The type of the result that is returned by the health check endpoint.</typeparam>
     /// <param name="builder">The endpoint builder.</param>
     /// <param name="configureMetadata">A callback to configure the endpoint metadata.</param>
     /// <returns>The <see cref="IEndpointConventionBuilder"/>.</returns>
-    public static IEndpointConventionBuilder WithOpenApi<T>(
+    public static IEndpointConventionBuilder WithOpenApi<TReport>(
         this IEndpointConventionBuilder builder,
         Action<HealthCheckDescriptionMetadata>? configureMetadata = null)
     {
-        return builder.WithOpenApi(typeof(T), configureMetadata);
+        return builder.WithOpenApi(typeof(TReport), configureMetadata);
     }
 }

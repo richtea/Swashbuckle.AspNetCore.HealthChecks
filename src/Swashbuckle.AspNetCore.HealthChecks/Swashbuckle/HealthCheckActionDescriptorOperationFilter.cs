@@ -7,9 +7,8 @@ namespace Swashbuckle.AspNetCore.HealthChecks;
 
 /// <summary>
 /// An <see cref="IOperationFilter" /> to enhance health check OpenAPI documentation based on the contents of the
-/// associated <see cref="HealthCheckActionDescriptor"/>, if present.
+/// associated <see cref="HealthCheckActionDescriptor"/> metadata, if present.
 /// </summary>
-/// <seealso cref="Swashbuckle.AspNetCore.SwaggerGen.IOperationFilter" />
 [SuppressMessage("ReSharper", "ClassNeverInstantiated.Global", Justification = "Instantiated implicitly")]
 internal class HealthCheckActionDescriptorOperationFilter : IOperationFilter
 {

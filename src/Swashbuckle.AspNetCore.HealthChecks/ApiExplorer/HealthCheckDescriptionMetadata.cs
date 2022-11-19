@@ -40,4 +40,10 @@ public class HealthCheckDescriptionMetadata
     /// Gets or sets a friendly name for the ApiExplorer action descriptor.
     /// </summary>
     public string? DisplayName { get; set; }
+
+    /// <summary>
+    /// Gets a dictionary that contains extended metadata. This is provided for extensibility purposes.
+    /// </summary>
+    public IDictionary<string, object> ExtendedMetadata { get; } =
+        new Dictionary<string, object>(StringComparer.Ordinal);
 }

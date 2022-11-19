@@ -6,9 +6,9 @@ using Microsoft.AspNetCore.Routing.Patterns;
 namespace Swashbuckle.AspNetCore.HealthChecks.ApiExplorer;
 
 /// <summary>
-/// An <see cref="IApiDescriptionProvider" /> that provides API descriptions for health check endpoints.
+/// An <see cref="IApiDescriptionProvider" /> that generates API descriptions for health check endpoints.
 /// </summary>
-internal class HealthCheckApiDescriptionProvider : IApiDescriptionProvider
+public class HealthCheckApiDescriptionProvider : IApiDescriptionProvider
 {
     private readonly IModelMetadataProvider _modelMetadataProvider;
 
@@ -52,19 +52,16 @@ internal class HealthCheckApiDescriptionProvider : IApiDescriptionProvider
     {
     }
 
-    private static string GetRelativePath(RouteEndpoint endpoint)
-    {
-        return string.Join('/', endpoint.RoutePattern.PathSegments.Select(GetLiteralSegmentText));
-    }
-
-    private static string GetLiteralSegmentText(RoutePatternPathSegment segment)
-    {
-        return string.Join(
-            '/',
-            segment.Parts.Where(p => p.IsLiteral).Select(p => ((RoutePatternLiteralPart)p).Content));
-    }
-
-    private ApiDescription CreateApiDescription(RouteEndpoint endpoint, HealthCheckDescriptionMetadata metadata)
+    /// <summary>
+    /// Generates an <see cref="ApiDescription"/> to represent the specified health check endpoint.
+    /// </summary>
+    /// <param name="endpoint">A <see cref="RouteEndpoint"/> instance that represents the health check endpoint.</param>
+    /// <param name="metadata">The metadata about the health check endpoint that was configured during startup.</param>
+    /// <returns>An <see cref="ApiDescription"/> that describes the health check endpoint.</returns>
+    /// <exception cref="NotSupportedException">Route parameters are not supported in health check endpoints.</exception>
+    protected virtual ApiDescription CreateApiDescription(
+        RouteEndpoint endpoint,
+        HealthCheckDescriptionMetadata metadata)
     {
         var r = endpoint.RoutePattern;
 
@@ -103,5 +100,17 @@ internal class HealthCheckApiDescriptionProvider : IApiDescriptionProvider
         }
 
         return apiDescription;
+    }
+
+    private static string GetRelativePath(RouteEndpoint endpoint)
+    {
+        return string.Join('/', endpoint.RoutePattern.PathSegments.Select(GetLiteralSegmentText));
+    }
+
+    private static string GetLiteralSegmentText(RoutePatternPathSegment segment)
+    {
+        return string.Join(
+            '/',
+            segment.Parts.Where(p => p.IsLiteral).Select(p => ((RoutePatternLiteralPart)p).Content));
     }
 }
