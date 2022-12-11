@@ -226,7 +226,6 @@ public class SwaggerTests
                             services =>
                             {
                                 // Add services to the container.
-
                                 services.AddControllers();
 
                                 services.AddEndpointsApiExplorer();

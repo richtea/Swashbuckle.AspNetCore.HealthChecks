@@ -1,0 +1,30 @@
+name: '[autorelease] On release published'
+
+on:
+  release:
+    types: [published]
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v3
+      with:
+        dotnet-version: 6.0.x
+
+    - name: Download nupkg release asset
+      uses: robinraju/release-downloader@63a56bcf84060d864b165ef03efbb696d1a8f066
+      with:
+        releaseId: '${{ github.event.release.id }}'
+        fileName: "*.nupkg"
+        out-file-path: 'assets'
+
+    - name: Publish NuGet package
+      run: |
+        for file in assets/*.nupkg; do 
+          dotnet nuget push $file --api-key "${{ secrets.NUGET_APIKEY }}" --source https://api.nuget.org/v3/index.json
+        done
