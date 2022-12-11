@@ -59,7 +59,7 @@ jobs:
 
     - name: Create Pull Request
       id: create-release-pr
-      uses: peter-evans/create-pull-request@v3
+      uses: peter-evans/create-pull-request@v4
       with:
         commit-message: 'chore: Update changelog for release ${{ steps.update-changelog.outputs.release-version }}'
         committer: 'releasebot <noreply@github.com>'
