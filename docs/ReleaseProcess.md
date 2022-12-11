@@ -31,15 +31,25 @@ Typically, you will run this action on the `main` branch, as releases are taken 
 
 #### Release type notes
 
-How to choose a release type? The documentation for the semver `inc` function isn't extensive. Here are some notes, I
-will write a full description later.
+How to choose a release type? The documentation for the semver `inc` function isn't extensive. Below are some examples,
+I will write a full description later.
 
 ##### Examples
 
-| Latest release | Release type        | Result             |
-| -------------- | --------------------| ------------------ |
-| 0.1.0-alpha.0  | prerelease (alpha)  | 0.1.0-alpha.1      |
-| 0.1.0-alpha.2  | minor               | 0.1.0              |
+| Latest release   | release-type | prerelease-identifier | Result            |
+| ---------------- | ------------ | --------------------- | ----------------- |
+| `unreleased`     | prerelease   | `alpha`               | `0.0.1-alpha.0`   |
+| `unreleased`     | preminor     | `alpha`               | `0.1.0-alpha.0`   |
+| `0.1.0-alpha.1`  | prerelease   | `alpha`               | `0.1.0-alpha.2`   |
+| `0.1.0-alpha.1`  | prerelease   | _empty_               | `0.1.0-alpha.2`   |
+| `0.1.0-alpha.1`  | prerelease   | `beta`                | `0.1.0-beta.0`    |
+| `0.1.0-beta.0`   | prerelease   | _empty_               | `0.1.0-beta.1`    |
+| `0.1.0-beta.1`   | minor        | _empty_               | `0.1.0`           |
+| `0.1.0-beta.1`   | preminor     | `alpha`               | `0.2.0-alpha.0`   |
+| `0.1.0-beta.1`   | preminor     | `beta`                | `0.2.0-beta.0`    |
+| `0.1.0-beta.1`   | minor        | `beta`                | `0.1.0`           |
+| `0.1.0-beta.1`   | minor        | `alpha`               | `0.1.0`           |
+| `0.1.0`          | prerelease   | `alpha`               | `0.1.1-alpha.0`   |
 
 ### Validate and merge the release PR
 
