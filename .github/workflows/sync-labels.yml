@@ -1,0 +1,27 @@
+# Keeps the repo labels in sync with .github/labels.yml
+
+name: '[autochore] Sync labels'
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - .github/labels.yml
+  workflow_dispatch:  # Allow running the workflow manually from the GitHub UI
+
+
+jobs:
+  sync:
+    name: Perform sync
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - uses: EndBug/label-sync@v2
+        with:
+          config-file: .github/labels.yml
+          delete-other-labels: true
+          dry-run: false
+          token: ${{ secrets.GITHUB_TOKEN }}

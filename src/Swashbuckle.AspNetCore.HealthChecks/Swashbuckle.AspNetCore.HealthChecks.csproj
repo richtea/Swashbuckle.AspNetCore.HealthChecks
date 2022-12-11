@@ -4,20 +4,52 @@
         <TargetFramework>net6.0</TargetFramework>
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
+        <DebugType>embedded</DebugType>
+        <IsPackable>true</IsPackable>
     </PropertyGroup>
 
     <PropertyGroup>
         <GenerateDocumentationFile>true</GenerateDocumentationFile>
         <Product>Swashbuckle.AspNetCore.HealthChecks</Product>
-        <Description>Provides Swashbuckle support for health checks.</Description>
     </PropertyGroup>
+
+    <!-- NuGet package properties -->
+    <PropertyGroup>
+        <Description>Provides Swashbuckle support for health checks.</Description>
+        <PackageId>Swashbuckle.AspNetCore.HealthChecks</PackageId>
+        <Version>0.1.0</Version>
+        <Authors>Rich Tebb</Authors>
+        <Copyright>Copyright (c) Rich Tebb</Copyright>
+        <PackageTags>swashbuckle;swagger;openapi;health-check</PackageTags>
+        <PackageReadmeFile>README.md</PackageReadmeFile>
+        <PackageLicenseFile>LICENSE</PackageLicenseFile>
+        <PackageProjectUrl></PackageProjectUrl>
+        <PackageIcon>icon.png</PackageIcon>
+    </PropertyGroup>
+
+    <!-- 
+      Sets the package's projectUrl to the repository URL, unless specified above.
+    -->
+    <Target Name="_InitializeProjectUrl" BeforeTargets="GenerateNuspec" DependsOnTargets="InitializeSourceControlInformation" Condition="'$(RepositoryUrl)' != '' and '$(PackageProjectUrl)' == '' ">
+        <CreateProperty Value="$([System.Text.RegularExpressions.Regex]::Replace('$(RepositoryUrl)', '\.git$', ''))">
+            <Output PropertyName="PackageProjectUrl" TaskParameter="Value" />
+        </CreateProperty>
+    </Target>
 
     <ItemGroup>
       <PackageReference Include="AsyncFixer" Version="1.6.0">
         <PrivateAssets>all</PrivateAssets>
         <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       </PackageReference>
+      <PackageReference Include="DotNet.ReproducibleBuilds" Version="1.1.1">
+        <PrivateAssets>all</PrivateAssets>
+        <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      </PackageReference>
       <PackageReference Include="Meziantou.Analyzer" Version="1.0.740">
+        <PrivateAssets>all</PrivateAssets>
+        <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      </PackageReference>
+      <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.1.1">
         <PrivateAssets>all</PrivateAssets>
         <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       </PackageReference>
@@ -40,6 +72,9 @@
       <AdditionalFiles Include="..\..\StyleCop.json">
         <Link>StyleCop.json</Link>
       </AdditionalFiles>
+      <None Include="..\..\README.md" Pack="true" PackagePath="\" />
+      <None Include="..\..\LICENSE" Pack="true" PackagePath="\" />
+      <None Include="icon.png" Pack="true" PackagePath=""/>
     </ItemGroup>
 
 </Project>

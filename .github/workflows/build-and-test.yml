@@ -1,0 +1,100 @@
+name: Build and test
+
+on:
+  workflow_call:
+    inputs:
+      build-version:
+        required: true
+        type: string
+      configuration:
+        required: false
+        type: string
+        default: 'Release'
+    outputs:
+      nupkg-artifact:
+        description: The name of the artifact produced by this workflow, which contains the NuGet packages
+        value: ${{ jobs.build.outputs.nupkg-artifact }}
+  workflow_dispatch:    # Allow running the workflow manually from the GitHub UI, for diagnostic purposes
+
+env:
+  BUILD_VERSION: ${{ inputs.build-version && inputs.build-version || '0.0.0-ci.0' }}
+  BUILD_CONFIG: ${{ inputs.configuration && inputs.configuration || 'Release'}}
+  SOLUTION: 'Swashbuckle.AspNetCore.HealthChecks.sln'
+  PACKAGE_PATH: ${{ github.workspace }}/publish
+  DOTNET_SKIP_FIRST_TIME_EXPERIENCE: 1
+  DOTNET_NOLOGO: true
+  NUPKG_ARTIFACT_NAME: nupkg
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    outputs:
+      nupkg-artifact: ${{ steps.output_variables.outputs.nupkg-artifact }}
+    steps:
+    - uses: actions/checkout@v3
+
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v3
+      with:
+        dotnet-version: 6.0.x
+
+    - name: Restore dependencies
+      run: |
+        dotnet restore $SOLUTION
+        dotnet tool restore
+
+    - name: Clean output directory
+      run: |
+        echo "Cleaning ${{ env.PACKAGE_PATH }}"
+        [ -d ${{ env.PACKAGE_PATH }} ] && rm -rf ${{ env.PACKAGE_PATH }} || true
+
+    - name: Build
+      run: >-
+        dotnet build $SOLUTION
+        --configuration $BUILD_CONFIG
+        -p:Version=$BUILD_VERSION
+        --no-restore
+
+    - name: Run tests
+      run: >-
+        dotnet test
+        --configuration $BUILD_CONFIG
+        --no-restore
+        --no-build
+        --verbosity normal
+        --logger "GitHubActions;annotations.titleFormat=\$test;annotations.messageFormat=\$error"
+
+    - name: Create NuGet package
+      run: >-
+        dotnet pack
+        --configuration $BUILD_CONFIG
+        --no-build
+        --verbosity normal
+        -p:Version=$BUILD_VERSION
+        --output ${{ env.PACKAGE_PATH }}
+
+    # Validate metadata and content of the NuGet package
+    # https://www.nuget.org/packages/Meziantou.Framework.NuGetPackageValidation.Tool#readme-body-tab
+    # If some rules are not applicable, you can disable them
+    # using the --excluded-rules or --excluded-rule-ids option
+    - name: Validate package
+      run: >-
+        ls ${{ env.PACKAGE_PATH }}/*.nupkg | xargs dotnet tool run meziantou.validate-nuget-package
+
+    - name: Upload nupkg artifact
+      uses: actions/upload-artifact@v3
+      with:
+        name: ${{ env.NUPKG_ARTIFACT_NAME }}
+        if-no-files-found: error
+        retention-days: 7
+        path: '${{ env.PACKAGE_PATH }}/*.nupkg'
+
+    - name: Output variables
+      id: output_variables
+      run: |
+        artifact_name='${{ env.NUPKG_ARTIFACT_NAME }}'
+        if [[ -f $GITHUB_OUTPUT ]]; then
+          echo "nupkg-artifact=$artifact_name" >> $GITHUB_OUTPUT
+        else
+          echo "::set-output name=nupkg-artifact::$artifact_name"
+        fi
