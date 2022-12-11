@@ -52,7 +52,11 @@ public class HealthCheckReportTests
     [Fact]
     public async Task report_contains_data_when_available()
     {
-        var data = new Dictionary<string, object> { { "Key1", "Value1" }, { "Key2", 2 },  };
+        var data = new Dictionary<string, object>
+        {
+            { "Key1", "Value1" },
+            { "Key2", 2 },
+        };
         var result = new HealthCheckResult(HealthStatus.Healthy, "test_description", data: data);
         var options = new HealthCheckReportFormatOptions();
         var host = await CreateTestHostBuilder(result, options).StartAsync();
@@ -73,12 +77,15 @@ public class HealthCheckReportTests
     {
         var result = new HealthCheckResult(HealthStatus.Healthy);
         var options = new HealthCheckReportFormatOptions { JsonOptionsSource = JsonOptionsSource.HttpJsonOptions };
-        var host = await CreateTestHostBuilder(result, options, configureHttpJsonOptions: jsonOptions =>
-            {
-                // Ensure naming policy isn't camelcase, and omit the JsonStringEnumConverter, so
-                // we can distinguish between the Http and Mvc JSON settings
-                jsonOptions.SerializerOptions.PropertyNamingPolicy = null;
-            })
+        var host = await CreateTestHostBuilder(
+                result,
+                options,
+                jsonOptions =>
+                {
+                    // Ensure naming policy isn't camelcase, and omit the JsonStringEnumConverter, so
+                    // we can distinguish between the Http and Mvc JSON settings
+                    jsonOptions.SerializerOptions.PropertyNamingPolicy = null;
+                })
             .StartAsync();
 
         using var client = host.GetTestClient();
@@ -96,13 +103,16 @@ public class HealthCheckReportTests
     {
         var result = new HealthCheckResult(HealthStatus.Healthy);
         var options = new HealthCheckReportFormatOptions { JsonOptionsSource = JsonOptionsSource.MvcJsonOptions };
-        var host = await CreateTestHostBuilder(result, options, configureHttpJsonOptions: jsonOptions =>
-            {
-                // Ensure naming policy isn't camelcase, and omit the JsonStringEnumConverter, so
-                // we can distinguish between the Http and Mvc JSON settings
-                // Note that these options shouldn't be active, because we have specified the MVC JSON options above
-                jsonOptions.SerializerOptions.PropertyNamingPolicy = null;
-            })
+        var host = await CreateTestHostBuilder(
+                result,
+                options,
+                jsonOptions =>
+                {
+                    // Ensure naming policy isn't camelcase, and omit the JsonStringEnumConverter, so
+                    // we can distinguish between the Http and Mvc JSON settings
+                    // Note that these options shouldn't be active, because we have specified the MVC JSON options above
+                    jsonOptions.SerializerOptions.PropertyNamingPolicy = null;
+                })
             .StartAsync();
 
         using var client = host.GetTestClient();
@@ -128,6 +138,7 @@ public class HealthCheckReportTests
         {
             exception = e;
         }
+
         var result = new HealthCheckResult(HealthStatus.Unhealthy, "test_description", exception);
         var options = new HealthCheckReportFormatOptions();
         var host = await CreateTestHostBuilder(result, options).StartAsync();
@@ -161,7 +172,7 @@ public class HealthCheckReportTests
         {
             ConfigureDefaultJsonSerializerOptions(options.JsonSerializerOptions);
         };
-        
+
         void ConfigureHealthCheckEndpoints(IEndpointRouteBuilder endpoints)
         {
             endpoints.MapHealthChecks(

@@ -34,7 +34,7 @@ app.MapHealthChecks("/healthz")
 
 The default output from a health check endpoint is a plaintext response that contains the overall health check status,
 e.g. `Degraded`. In the above examples, the plaintext response is indicated by the use of `string` as the type parameter
-when calling the `WithOpenApi<string>` extension method. 
+when calling the `WithOpenApi<string>` extension method.
 
 If you want to return a more detailed response, the health check subsystem enables you to customize the output
 as described [here](https://learn.microsoft.com/en-us/aspnet/core/host-and-deploy/health-checks#customize-output).

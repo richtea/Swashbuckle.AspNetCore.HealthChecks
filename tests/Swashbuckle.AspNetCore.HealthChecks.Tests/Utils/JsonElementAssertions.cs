@@ -114,7 +114,7 @@ public class JsonElementAssertions : ReferenceTypeAssertions<JsonElement, JsonEl
         string because = "",
         params object[] becauseArgs)
     {
-        var success = Execute.Assertion
+        Execute.Assertion
             .BecauseOf(because, becauseArgs)
             .ForCondition(Subject.ValueKind is JsonValueKind.Object)
             .FailWith(
@@ -132,7 +132,7 @@ public class JsonElementAssertions : ReferenceTypeAssertions<JsonElement, JsonEl
         params object[] becauseArgs)
     {
         ArgumentNullException.ThrowIfNull(jsonPath);
-        
+
         var path = JsonPath.Parse(jsonPath);
 
         var results = path.Evaluate(Subject);
@@ -153,7 +153,7 @@ public class JsonElementAssertions : ReferenceTypeAssertions<JsonElement, JsonEl
                 .FailWith(
                     $"Expected {{context:JsonElement}} to contain path {{0}} {{expectedOccurrence}}{{reason}}, but found it {actual.Times()}",
                     jsonPath);
-            
+
             matched = results.Matches;
         }
         else
@@ -170,9 +170,9 @@ public class JsonElementAssertions : ReferenceTypeAssertions<JsonElement, JsonEl
         string jsonPath,
         string because = "",
         params object[] becauseArgs)
-    {   
+    {
         ArgumentNullException.ThrowIfNull(jsonPath);
-        
+
         var path = JsonPath.Parse(jsonPath);
 
         var results = path.Evaluate(Subject);
@@ -193,7 +193,7 @@ public class JsonElementAssertions : ReferenceTypeAssertions<JsonElement, JsonEl
                 .FailWith(
                     "Expected {context:JsonElement} to contain path {0}{reason}, but it was not found",
                     jsonPath);
-            
+
             Execute.Assertion
                 .ForCondition(actual < 2)
                 .BecauseOf(because, becauseArgs)
@@ -210,13 +210,14 @@ public class JsonElementAssertions : ReferenceTypeAssertions<JsonElement, JsonEl
 
         return new AndWhichConstraint<JsonElementAssertions, JsonElement>(this, (JsonElement)element!);
     }
+
     public AndConstraint<JsonElementAssertions> NotHaveElement(
         string jsonPath,
         string because = "",
         params object[] becauseArgs)
-    {   
+    {
         ArgumentNullException.ThrowIfNull(jsonPath);
-        
+
         var path = JsonPath.Parse(jsonPath);
 
         var results = path.Evaluate(Subject);
