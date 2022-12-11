@@ -67,7 +67,7 @@ jobs:
     - name: Create NuGet package
       run: |
         for file in src/**/*.csproj; do 
-          dotnet pack \
+          dotnet pack $file \
             --configuration $BUILD_CONFIG \
             --no-build \
             --verbosity normal \
