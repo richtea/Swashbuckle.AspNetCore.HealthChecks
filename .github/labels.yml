@@ -33,6 +33,11 @@
   description: 'Verified problems that need to be worked on'
   aliases: ['bug']
 
+- name: 'type: build'
+  color: C5DEF5
+  description: "Changes to the build or release process"
+  aliases: ['build']
+
 - name: 'type: chore'
   color: C5DEF5
   description: 'Code changes that neither fix bugs nor add features (refactoring, dependency changes, ...)'

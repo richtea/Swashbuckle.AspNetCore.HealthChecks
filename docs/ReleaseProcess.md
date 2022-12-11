@@ -4,13 +4,12 @@ This document describes how to create a new release of the NuGet package.
 
 ## Releasing a new version
 
-Versioning for these actions is based on GitHub's [action
-versioning](https://github.com/actions/toolkit/blob/master/docs/action-versioning.md)
-recommendations, with some workflows that automate much of the process.
+Versioning for these actions is based on [Semantic Versioning 2.0](https://semver.org/spec/v2.0.0.html) rules. GitHub
+workflows automate much of the release process.
 
-The release automation tooling relies on the [changelog](../CHANGELOG.md) to detect the current
-version number. The changelog is assumed to follow [keep a
-changelog](https://keepachangelog.com/en/1.0.0/) conventions.
+The release automation tooling relies on the [changelog](../CHANGELOG.md) to detect the current version number. The
+changelog is assumed to follow [keep a changelog](https://keepachangelog.com/en/1.0.0/) conventions (the changelog
+parser can be a bit picky, so ensure your headings are at the correct levels!).
 
 ### Update the changelog
 
