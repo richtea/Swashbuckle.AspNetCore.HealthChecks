@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "isRoot": true,
+  "tools": {
+    "meziantou.framework.nugetpackagevalidation.tool": {
+      "version": "1.0.8",
+      "commands": [
+        "meziantou.validate-nuget-package"
+      ]
+    }
+  }
+}
