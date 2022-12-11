@@ -65,13 +65,16 @@ jobs:
         --logger "GitHubActions;annotations.titleFormat=\$test;annotations.messageFormat=\$error"
 
     - name: Create NuGet package
-      run: >-
-        dotnet pack
-        --configuration $BUILD_CONFIG
-        --no-build
-        --verbosity normal
-        -p:Version=$BUILD_VERSION
-        --output ${{ env.PACKAGE_PATH }}
+      run: |
+        for file in src/**/*.csproj; do 
+          dotnet pack $file \
+            --configuration $BUILD_CONFIG \
+            --no-build \
+            --verbosity normal \
+            -p:Version=$BUILD_VERSION \
+            --output ${{ env.PACKAGE_PATH }}
+        done
+        
 
     # Validate metadata and content of the NuGet package
     # https://www.nuget.org/packages/Meziantou.Framework.NuGetPackageValidation.Tool#readme-body-tab

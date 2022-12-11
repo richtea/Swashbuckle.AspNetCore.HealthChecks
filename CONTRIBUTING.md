@@ -1,6 +1,6 @@
 # Contributing to this Repository
 
-Thanks for considering a contribution to this repo!
+Thanks for considering a contribution to this repo! Your help and feedback is really appreciated.
 
 You can contribute in a number of ways:
 
@@ -12,8 +12,8 @@ You can contribute in a number of ways:
 
 ## Reporting bugs
 
-If something isn't working how you expect it to, it might be a bug in the code. Please create an
-issue to let us know, and tag it with the `bug` tag.
+If something isn't working how you expect it to, it might be a bug in the code. Please create an issue to let us know,
+and tag it with the https://github.com/richtea/Swashbuckle.AspNetCore.HealthChecks/labels/type%3A%20bug tag.
 
 When filing a bug, please explain:
 
@@ -27,9 +27,11 @@ When filing a bug, please explain:
 If you have a good idea for something that you'd like to see,  we'd love to hear about it. Please
 create an issue and tag it:
 
-- Use the `enhancement` tag if it's a new feature.
+- Use the https://github.com/richtea/Swashbuckle.AspNetCore.HealthChecks/labels/type%3A%20feature tag if it's a new
+  feature.
 
-- Use the `documentation` tag if it relates to the docs.
+- Use the https://github.com/richtea/Swashbuckle.AspNetCore.HealthChecks/labels/type%3A%20docs tag if it relates to the
+  docs.
 
 ## Code contributions
 
@@ -38,4 +40,7 @@ process](https://docs.github.com/en/get-started/quickstart/contributing-to-proje
 are non-trivial, you are advised to propose the enhancement first by creating an issue, so that the
 proposal can be discussed before you spend lots of time working on it.
 
-Instructions for developers are [here](./DevelopingAndReleasing.md).
+Style checks and other analyzers are built-in. Please keep your style consistent with existing code and fix all warnings
+before you create a PR.
+
+Instructions for the release process are [here](./docs/ReleaseProcess.md).
