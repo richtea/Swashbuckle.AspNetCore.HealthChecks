@@ -1,16 +1,18 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
-        <TargetFramework>net6.0</TargetFramework>
+        <TargetFrameworks>net7.0;net6.0;netcoreapp3.1</TargetFrameworks>
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
         <DebugType>embedded</DebugType>
         <IsPackable>true</IsPackable>
+        <LangVersion>latest</LangVersion>
     </PropertyGroup>
 
     <PropertyGroup>
         <GenerateDocumentationFile>true</GenerateDocumentationFile>
         <Product>Swashbuckle.AspNetCore.HealthChecks</Product>
+        <OpenApiGenerateDocumentsOnBuild>false</OpenApiGenerateDocumentsOnBuild>
     </PropertyGroup>
 
     <!-- NuGet package properties -->
@@ -20,7 +22,7 @@
         <Version>0.1.0</Version>
         <Authors>Rich Tebb</Authors>
         <Copyright>Copyright (c) Rich Tebb</Copyright>
-        <PackageTags>swashbuckle;swagger;openapi;health-check</PackageTags>
+        <PackageTags>swashbuckle;swagger;openapi;health-check;webapi;aspnet;aspnetcore</PackageTags>
         <PackageReadmeFile>README.md</PackageReadmeFile>
         <PackageLicenseFile>LICENSE</PackageLicenseFile>
         <PackageProjectUrl></PackageProjectUrl>
@@ -74,7 +76,7 @@
       </AdditionalFiles>
       <None Include="..\..\README.md" Pack="true" PackagePath="\" />
       <None Include="..\..\LICENSE" Pack="true" PackagePath="\" />
-      <None Include="icon.png" Pack="true" PackagePath=""/>
+      <None Include="icon.png" Pack="true" PackagePath="" />
     </ItemGroup>
 
 </Project>

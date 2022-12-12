@@ -1,6 +1,7 @@
 using System.Net.Mime;
 using System.Text.Json;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
 using Microsoft.Extensions.Options;
@@ -15,7 +16,7 @@ public class HealthCheckReportFormatter
     private readonly HealthCheckReportFormatOptions _options;
 
     /// <summary>
-    /// Initializes a new instance of the <see cref="HealthCheckReportFormatter"/> class.
+    /// Initializes a new instance of the <see cref="HealthCheckReportFormatter" /> class.
     /// </summary>
     /// <param name="options">The options that configure the response writer, or <c>null</c> to use the default options.</param>
     public HealthCheckReportFormatter(HealthCheckReportFormatOptions? options = null)
@@ -32,6 +33,8 @@ public class HealthCheckReportFormatter
     public Task WriteDetailedReport(HttpContext context, HealthReport report)
     {
         var endpointPath = context.Request.Path.Value ?? string.Empty;
+
+#if NET5_0_OR_GREATER
         var jsonSerializerOptions = _options.JsonOptionsSource switch
         {
             JsonOptionsSource.HttpJsonOptions => context.RequestServices
@@ -42,6 +45,11 @@ public class HealthCheckReportFormatter
                 .Value.JsonSerializerOptions,
             _ => throw new NotSupportedException("The specified value is not supported"),
         };
+#else
+        var jsonSerializerOptions = context.RequestServices
+            .GetRequiredService<IOptions<JsonOptions>>()
+            .Value.JsonSerializerOptions;
+#endif
 
         var result = JsonSerializer.Serialize(
             new HealthCheckReport
@@ -64,4 +72,8 @@ public class HealthCheckReportFormatter
         context.Response.ContentType = MediaTypeNames.Application.Json;
         return context.Response.WriteAsync(result, context.RequestAborted);
     }
+#if !NET5_0_OR_GREATER
+
+    // ReSharper disable once NotAccessedField.Local
+#endif
 }

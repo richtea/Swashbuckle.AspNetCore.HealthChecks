@@ -17,13 +17,13 @@ public class SwaggerGeneratorOptionsPostConfiguration : IPostConfigureOptions<Sw
     /// <param name="options">The <see cref="HealthCheckApiExplorerOptions"/> instance.</param>
     public SwaggerGeneratorOptionsPostConfiguration(IOptions<HealthCheckApiExplorerOptions> options)
     {
-        ArgumentNullException.ThrowIfNull(options);
+        ThrowHelper.ThrowIfNull(options);
 
         _apiExplorerOptions = options.Value;
     }
 
     /// <inheritdoc />
-    public void PostConfigure(string name, SwaggerGeneratorOptions options)
+    public void PostConfigure(string? name, SwaggerGeneratorOptions options)
     {
         if (_apiExplorerOptions.CreateHealthCheckOpenApiDocument)
         {

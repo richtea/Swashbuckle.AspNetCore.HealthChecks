@@ -131,7 +131,7 @@ public class JsonElementAssertions : ReferenceTypeAssertions<JsonElement, JsonEl
         string because = "",
         params object[] becauseArgs)
     {
-        ArgumentNullException.ThrowIfNull(jsonPath);
+        ThrowHelper.ThrowIfNull(jsonPath);
 
         var path = JsonPath.Parse(jsonPath);
 
@@ -171,7 +171,7 @@ public class JsonElementAssertions : ReferenceTypeAssertions<JsonElement, JsonEl
         string because = "",
         params object[] becauseArgs)
     {
-        ArgumentNullException.ThrowIfNull(jsonPath);
+        ThrowHelper.ThrowIfNull(jsonPath);
 
         var path = JsonPath.Parse(jsonPath);
 
@@ -216,7 +216,7 @@ public class JsonElementAssertions : ReferenceTypeAssertions<JsonElement, JsonEl
         string because = "",
         params object[] becauseArgs)
     {
-        ArgumentNullException.ThrowIfNull(jsonPath);
+        ThrowHelper.ThrowIfNull(jsonPath);
 
         var path = JsonPath.Parse(jsonPath);
 

@@ -22,7 +22,7 @@ public static class SwaggerHealthChecksBuilderExtensions
     /// <returns>The <see cref="IHealthChecksBuilder"/>.</returns>
     public static IHealthChecksBuilder AddOpenApi(this IHealthChecksBuilder builder, Action<HealthCheckApiExplorerOptions>? configureOptions = null)
     {
-        ArgumentNullException.ThrowIfNull(builder);
+        ThrowHelper.ThrowIfNull(builder);
 
         builder.Services.TryAddEnumerable(
             ServiceDescriptor.Transient<IApiDescriptionProvider, HealthCheckApiDescriptionProvider>());
@@ -74,7 +74,7 @@ public static class SwaggerHealthChecksBuilderExtensions
         this IServiceCollection services,
         Action<HealthCheckApiExplorerOptions> configureOptions)
     {
-        ArgumentNullException.ThrowIfNull(services);
+        ThrowHelper.ThrowIfNull(services);
 
         services.Configure(configureOptions);
         return services;

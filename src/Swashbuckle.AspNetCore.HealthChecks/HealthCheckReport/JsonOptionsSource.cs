@@ -2,6 +2,7 @@ using System.Text.Json;
 
 namespace Swashbuckle.AspNetCore.HealthChecks;
 
+#pragma warning disable CS1574, CS1584, CS1581, CS1580
 /// <summary>
 /// The source to use when resolving the <see cref="JsonSerializerOptions" /> that configure the output format of a
 /// <see cref="HealthCheckReport"/>.
@@ -33,3 +34,4 @@ public enum JsonOptionsSource
     /// </summary>
     MvcJsonOptions,
 }
+#pragma warning restore CS1574, CS1584, CS1581, CS1580

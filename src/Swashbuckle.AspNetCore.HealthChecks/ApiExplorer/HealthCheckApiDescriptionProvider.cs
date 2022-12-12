@@ -34,7 +34,7 @@ public class HealthCheckApiDescriptionProvider : IApiDescriptionProvider
     /// <inheritdoc />
     public void OnProvidersExecuting(ApiDescriptionProviderContext context)
     {
-        ArgumentNullException.ThrowIfNull(context);
+        ThrowHelper.ThrowIfNull(context);
 
         foreach (var endpoint in _endpointDataSource.Endpoints)
         {
