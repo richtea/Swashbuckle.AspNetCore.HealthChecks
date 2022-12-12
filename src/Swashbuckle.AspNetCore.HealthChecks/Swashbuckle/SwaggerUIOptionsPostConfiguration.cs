@@ -22,15 +22,15 @@ public class SwaggerUIOptionsPostConfiguration : IPostConfigureOptions<SwaggerUI
         IOptions<HealthCheckApiExplorerOptions> apiExplorerOptions,
         IWebHostEnvironment hostingEnv)
     {
-        ArgumentNullException.ThrowIfNull(apiExplorerOptions);
-        ArgumentNullException.ThrowIfNull(hostingEnv);
+        ThrowHelper.ThrowIfNull(apiExplorerOptions);
+        ThrowHelper.ThrowIfNull(hostingEnv);
 
         _apiExplorerOptions = apiExplorerOptions.Value;
         _hostingEnv = hostingEnv;
     }
 
     /// <inheritdoc />
-    public void PostConfigure(string name, SwaggerUIOptions options)
+    public void PostConfigure(string? name, SwaggerUIOptions options)
     {
         if (_apiExplorerOptions.CreateHealthCheckOpenApiDocument)
         {

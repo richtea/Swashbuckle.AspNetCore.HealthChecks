@@ -228,7 +228,9 @@ public class SwaggerTests
                                 // Add services to the container.
                                 services.AddControllers();
 
+#if NET5_0_OR_GREATER
                                 services.AddEndpointsApiExplorer();
+#endif
                                 services.AddSwaggerGen();
                                 services.AddHealthChecks().AddOpenApi(configureOptions);
                             })

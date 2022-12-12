@@ -14,7 +14,7 @@ internal class SwaggerGenOptionsConfiguration : IConfigureOptions<SwaggerGenOpti
 
     public SwaggerGenOptionsConfiguration(IOptions<HealthCheckApiExplorerOptions> options)
     {
-        ArgumentNullException.ThrowIfNull(options);
+        ThrowHelper.ThrowIfNull(options);
 
         _apiExplorerOptions = options.Value;
     }
