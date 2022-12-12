@@ -1,5 +1,9 @@
 # Swashbuckle.AspNetCore.HealthChecks
 
+![CI build status](https://github.com/richtea/Swashbuckle.AspNetCore.HealthChecks/actions/workflows/ci.yml/badge.svg)
+![GitHub latest release](https://img.shields.io/github/v/release/richtea/Swashbuckle.AspNetCore.HealthChecks?include_prereleases&sort=semver)
+![Nuget](https://img.shields.io/nuget/v/Swashbuckle.AspNetCore.HealthChecks)
+
 This library provides [Swashbuckle](https://github.com/domaindrivendev/Swashbuckle.AspNetCore) support for [ASP.NET Core
 health checks](https://learn.microsoft.com/en-us/aspnet/core/host-and-deploy/health-checks).
 
