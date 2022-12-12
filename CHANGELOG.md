@@ -5,6 +5,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [Unreleased]
+
+### Added
+
+- Add multi-targeting to support the same .NET versions as Swashbuckle itself, except .NET 5 which is no longer in
+  support.
+
 ## [0.1.0-alpha.0] - 2022-12-11
 
 ### Added
