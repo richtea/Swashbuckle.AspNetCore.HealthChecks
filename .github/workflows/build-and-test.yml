@@ -33,10 +33,13 @@ jobs:
     steps:
     - uses: actions/checkout@v3
 
-    - name: Setup .NET
+    - name: Setup .NET versions
       uses: actions/setup-dotnet@v3
-      with:
-        dotnet-version: 6.0.x
+      with:	
+        dotnet-version: | 
+          3.1.x
+          6.0.x
+          7.0.x
 
     - name: Restore dependencies
       run: |
