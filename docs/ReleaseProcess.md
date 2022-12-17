@@ -35,8 +35,8 @@ For each change:
 - When your branch is ready to merge, create a pull request that targets the `main` branch. This triggers some CI
   workflows to validate the changes.
 
-- Merge the PR onto `main`. Prefer `Rebase and merge` or `Squash and merge` over `Create a merge commit`, so that the
-  commit history remains linear.
+- Merge the PR onto `main`. Prefer **Rebase and merge** or **Squash and merge** over **Create a merge commit**, so that
+  the commit history remains linear.
 
 ### 1. Initiate the release process
 
@@ -53,7 +53,7 @@ Prepare release PR` workflow from the repo's Actions page. The parameters are:
 - **Release type:** Select the appropriate value that defines how the release number will be incremented. See below for
   further details.
 
-- **Pre-release identifier:** The pre-release prefix, e.g. `alpha`, `beta` etc.
+- **Pre-release identifier:** The pre-release prefix, e.g. `alpha`, `beta` etc. Leave blank for a non-prerelease.
 
 This workflow creates a PR containing a commit that updates the changelog by modifying the `[Unreleased]` section title
 to contain the incremented version number.
@@ -84,10 +84,10 @@ examples, I will write a full description later.
 ### 2. Merge the release PR
 
 Once the PR is created, all you need to do is sanity check the contents of the PR, and then merge it back onto the
-original branch. You should do this as soon as possible, because you don't want to include anything other than the code
-that was on the original branch when you created the release PR. **Don't attempt to rebase subsequent changes from the
-original branch onto the release PR**__ - this is not supported. If changes have been merged onto the original branch
-since you created the release PR, you should abandon that PR and start over.
+original branch. You should do this as soon as possible, because you don't want any other commits on the original branch
+when you created the release PR. **Don't attempt to rebase subsequent changes from the original branch onto the release
+PR branch**__ - this is not supported. If changes have been merged onto the original branch since you created the release PR,
+you should abandon that PR and start over.
 
 When you merge the PR back onto `main`, it triggers the release process. A workflow creates the release and attaches the
 NuGet package as a release asset. The release is created in draft mode.
