@@ -20,7 +20,8 @@ changelog is assumed to follow [keep a changelog](https://keepachangelog.com/en/
 
 ### 0. Make changes
 
-This is a typical trunk-based workflow. You will probably repeat this several times between each release.
+This is a typical trunk-based workflow. You will probably repeat this several times between each release, as you fix
+bugs and add features.
 
 For each change:
 
@@ -31,8 +32,11 @@ For each change:
 - Make your changes. Don't forget to update the `[Unreleased]` section of the changelog with a description of your
   changes!
 
-- When your branch is ready to merge, create a [pull request](./pulls) that targets the `main` branch. This triggers
-  some CI workflows to validate the changes.
+- When your branch is ready to merge, create a pull request that targets the `main` branch. This triggers some CI
+  workflows to validate the changes.
+
+- Merge the PR onto `main`. Prefer `Rebase and merge` or `Squash and merge` over `Create a merge commit`, so that the
+  commit history remains linear.
 
 ### 1. Initiate the release process
 

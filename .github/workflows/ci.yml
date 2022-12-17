@@ -4,6 +4,8 @@ on:
   pull_request:
     branches:           # Run the workflow for pull requests that target main branch
     - main
+    paths-ignore:
+    - docs/**
   workflow_dispatch:    # Allow running the workflow manually from the GitHub UI
 
 jobs:
