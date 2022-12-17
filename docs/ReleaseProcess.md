@@ -8,8 +8,11 @@ Versioning for this project is based on [Semantic Versioning 2.0](https://semver
 workflows automate much of the release process.
 
 The release automation tooling relies on the [changelog](../CHANGELOG.md) to detect the current version number. The
-changelog is assumed to follow [keep a changelog](https://keepachangelog.com/en/1.0.0/) conventions (the changelog
-parser can be a bit picky, so ensure your headings are at the correct levels!).
+changelog is assumed to follow [keep a changelog](https://keepachangelog.com/en/1.0.0/) conventions.
+
+> **Note**
+> The changelog parser can be a bit picky, and the error reporting is not too helpful, so ensure your headings
+> are at the correct levels!
 
 ## Development workflow
 
@@ -31,7 +34,7 @@ For each change:
 - When your branch is ready to merge, create a [pull request](./pulls) that targets the `main` branch. This triggers
   some CI workflows to validate the changes.
 
-### 1. Starting the release process
+### 1. Initiate the release process
 
 Release preparation starts by ensuring that the changelog is up to date. The tools assume that the changes have been
 documented in the `[Unreleased]` section of the changelog, and the process will fail if the section is not present. This
@@ -41,12 +44,12 @@ Once the `[Unreleased]` section of the changelog is up to date on the `main` bra
 bumps the changelog version to signify a new release. This step is mostly automated - just run the `[autorelease]
 Prepare release PR` workflow from the repo's Actions page. The parameters are:
 
-- __Use workflow from:__ `main`
+- **Use workflow from:** `main`
 
-- __Release type:__ Select the appropriate value that defines how the release number will be incremented. See below for
+- **Release type:** Select the appropriate value that defines how the release number will be incremented. See below for
   further details.
 
-- __Pre-release identifier:__ The pre-release prefix, e.g. `alpha`, `beta` etc.
+- **Pre-release identifier:** The pre-release prefix, e.g. `alpha`, `beta` etc.
 
 This workflow creates a PR containing a commit that updates the changelog by modifying the `[Unreleased]` section title
 to contain the incremented version number.
@@ -78,8 +81,8 @@ examples, I will write a full description later.
 
 Once the PR is created, all you need to do is sanity check the contents of the PR, and then merge it back onto the
 original branch. You should do this as soon as possible, because you don't want to include anything other than the code
-that was on the original branch when you created the release PR. __Don't attempt to rebase subsequent changes from the
-original branch onto the release PR__ - this is not supported. If changes have been merged onto the original branch
+that was on the original branch when you created the release PR. **Don't attempt to rebase subsequent changes from the
+original branch onto the release PR**__ - this is not supported. If changes have been merged onto the original branch
 since you created the release PR, you should abandon that PR and start over.
 
 When you merge the PR back onto `main`, it triggers the release process. A workflow creates the release and attaches the
