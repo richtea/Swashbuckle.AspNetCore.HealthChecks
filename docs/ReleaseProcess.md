@@ -86,8 +86,8 @@ examples, I will write a full description later.
 Once the PR is created, all you need to do is sanity check the contents of the PR, and then merge it back onto the
 original branch. You should do this as soon as possible, because you don't want any other commits on the original branch
 when you created the release PR. **Don't attempt to rebase subsequent changes from the original branch onto the release
-PR branch**__ - this is not supported. If changes have been merged onto the original branch since you created the release PR,
-you should abandon that PR and start over.
+PR branch**__ - this is not supported. If changes have been merged onto the original branch since you created the
+release PR, you should abandon that PR and start over.
 
 When you merge the PR back onto `main`, it triggers the release process. A workflow creates the release and attaches the
 NuGet package as a release asset. The release is created in draft mode.
