@@ -24,7 +24,7 @@
         <Copyright>Copyright (c) Rich Tebb</Copyright>
         <PackageTags>swashbuckle;swagger;openapi;health-check;webapi;aspnet;aspnetcore</PackageTags>
         <PackageReadmeFile>README.md</PackageReadmeFile>
-        <PackageLicenseFile>LICENSE</PackageLicenseFile>
+        <PackageLicenseExpression>ISC</PackageLicenseExpression>
         <PackageProjectUrl></PackageProjectUrl>
         <PackageIcon>icon.png</PackageIcon>
     </PropertyGroup>
@@ -75,7 +75,6 @@
         <Link>StyleCop.json</Link>
       </AdditionalFiles>
       <None Include="..\..\README.md" Pack="true" PackagePath="\" />
-      <None Include="..\..\LICENSE" Pack="true" PackagePath="\" />
       <None Include="icon.png" Pack="true" PackagePath="" />
     </ItemGroup>
 
