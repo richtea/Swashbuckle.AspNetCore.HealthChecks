@@ -17,7 +17,7 @@ jobs:
         dotnet-version: 6.0.x
 
     - name: Download nupkg release asset
-      uses: robinraju/release-downloader@f6a6d9e1b4c70306a568dedaf17c6073f254562c
+      uses: robinraju/release-downloader@1c22217529f5c649f36ce1b61b5f2775b34408a8
       with:
         releaseId: '${{ github.event.release.id }}'
         fileName: "*.nupkg"
