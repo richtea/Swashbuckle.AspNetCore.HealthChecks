@@ -42,11 +42,11 @@
     </ItemGroup>
   
     <ItemGroup Condition=" '$(TargetFramework)' == 'netcoreapp3.1' ">
-      <PackageReference Include="Microsoft.AspNetCore.Mvc.Testing" Version="3.1.31" />
+      <PackageReference Include="Microsoft.AspNetCore.Mvc.Testing" Version="7.0.2" />
     </ItemGroup>
 
     <ItemGroup Condition=" '$(TargetFramework)' != 'netcoreapp3.1' ">
-        <PackageReference Include="Microsoft.AspNetCore.Mvc.Testing" Version="6.0.10" />
+        <PackageReference Include="Microsoft.AspNetCore.Mvc.Testing" Version="7.0.2" />
     </ItemGroup>
 
   <ItemGroup>
