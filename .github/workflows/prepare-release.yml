@@ -52,7 +52,7 @@ jobs:
 
     - name: Update changelog
       id: update-changelog
-      uses: release-flow/keep-a-changelog-action/prepare-release@v1
+      uses: release-flow/keep-a-changelog-action/prepare-release@v2
       with:
         release-type: ${{ github.event.inputs.release-type }}
         prerelease-identifier: ${{ github.event.inputs.prerelease-identifier }}
