@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+### Added
+
+- Support for .NET 10 now available.
+
 ### Removed
 
 - No longer supported for .NET versions prior to .NET 8.0. To use this library with unsupported .NET versions, choose an
