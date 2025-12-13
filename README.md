@@ -40,8 +40,9 @@ The default output from a health check endpoint is a plaintext response that con
 e.g. `Degraded`. In the above examples, the plaintext response is indicated by the use of `string` as the type parameter
 when calling the `WithOpenApi<string>` extension method.
 
-If you want to return a more detailed response, the health check subsystem enables you to customize the output
-as described [here](https://learn.microsoft.com/en-us/aspnet/core/host-and-deploy/health-checks#customize-output).
+If you want to return a more detailed response, the health check subsystem enables you to customize the output as
+described in the [Microsoft
+docs](https://learn.microsoft.com/en-us/aspnet/core/host-and-deploy/health-checks#customize-output).
 
 This library includes a custom type, `HealthCheckReport`, that contains detailed information about the health check
 result. To use this type, you need to configure the `HealthCheckOptions.ResponseWriter` as shown below.

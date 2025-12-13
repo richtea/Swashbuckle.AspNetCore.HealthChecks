@@ -11,7 +11,12 @@ using Swashbuckle.AspNetCore.HealthChecks.Tests.Utils;
 
 namespace Swashbuckle.AspNetCore.HealthChecks.Tests;
 
-public class SwaggerTests
+/// <summary>
+/// Provides test fixtures for validating Swagger/OpenAPI document output.
+/// This class defines a series of test cases to ensure that Swagger documents are generated correctly
+/// with default values, customized configurations, document properties, and endpoint descriptions.
+/// </summary>
+public class SwaggerOutputFixture
 {
     [Fact]
     public async Task swagger_contains_default_values()

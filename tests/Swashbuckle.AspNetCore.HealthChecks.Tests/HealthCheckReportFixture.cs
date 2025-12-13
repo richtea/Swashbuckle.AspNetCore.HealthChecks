@@ -17,7 +17,13 @@ using Swashbuckle.AspNetCore.HealthChecks.Tests.Utils;
 
 namespace Swashbuckle.AspNetCore.HealthChecks.Tests;
 
-public class HealthCheckReportTests
+/// <summary>
+/// Provides a set of tests to verify the functionality of health check reporting
+/// and formatting within the application. This class contains various unit tests
+/// for validating the behavior of health check endpoints, their output formats,
+/// and response structure in different configurations and scenarios.
+/// </summary>
+public class HealthCheckReportFixture
 {
     [Fact]
     public async Task basic_health_report()
@@ -74,7 +80,6 @@ public class HealthCheckReportTests
         document.RootElement.Should().HaveElement("$.checks[0].data.Key2").Which.Should().HaveValue(2);
     }
 
-#if NET5_0_OR_GREATER
     [Fact]
     public async Task uses_http_json_when_configured()
     {
@@ -100,9 +105,7 @@ public class HealthCheckReportTests
         document.RootElement.Should().HaveElement("$.Status").Which.Should().HaveValue(2);
         document.RootElement.Should().HaveElement("$.Checks[0].Status").Which.Should().HaveValue(2);
     }
-#endif
 
-#if NET5_0_OR_GREATER
     [Fact]
     public async Task uses_mvc_json_when_configured()
     {
@@ -129,7 +132,6 @@ public class HealthCheckReportTests
         document.RootElement.Should().HaveElement("$.status").Which.Should().HaveValue("healthy");
         document.RootElement.Should().HaveElement("$.checks[0].status").Which.Should().HaveValue("healthy");
     }
-#endif
 
     [Fact]
     public async Task report_contains_exception_when_available()
@@ -166,33 +168,18 @@ public class HealthCheckReportTests
     private static IHostBuilder CreateTestHostBuilder(
         HealthCheckResult healthCheckResult,
         HealthCheckReportFormatOptions? reportFormatOptions = null,
-#if NET5_0_OR_GREATER
         Action<JsonOptions>? configureHttpJsonOptions = null,
-#endif
         Action<Microsoft.AspNetCore.Mvc.JsonOptions>? configureMvcJsonOptions = null)
     {
-#if NET5_0_OR_GREATER
         configureHttpJsonOptions ??= options =>
         {
             ConfigureDefaultJsonSerializerOptions(options.SerializerOptions);
         };
-#endif
 
         configureMvcJsonOptions ??= options =>
         {
             ConfigureDefaultJsonSerializerOptions(options.JsonSerializerOptions);
         };
-
-        void ConfigureHealthCheckEndpoints(IEndpointRouteBuilder endpoints)
-        {
-            endpoints.MapHealthChecks(
-                    "/healthz",
-                    new HealthCheckOptions
-                    {
-                        ResponseWriter = new HealthCheckReportFormatter(reportFormatOptions).WriteDetailedReport,
-                    })
-                .WithOpenApi<string>();
-        }
 
         var host = new HostBuilder()
             .ConfigureWebHost(
@@ -203,17 +190,11 @@ public class HealthCheckReportTests
                         .ConfigureServices(
                             services =>
                             {
-#if NET5_0_OR_GREATER
                                 services.Configure(configureHttpJsonOptions);
-#endif
-
                                 services.Configure(configureMvcJsonOptions);
 
                                 services.AddControllers();
-
-#if NET5_0_OR_GREATER
                                 services.AddEndpointsApiExplorer();
-#endif
                                 services.AddSwaggerGen();
                                 services.AddHealthChecks()
                                     .AddTypeActivatedCheck<TestHealthCheck>(
@@ -242,6 +223,17 @@ public class HealthCheckReportTests
                             });
                 });
         return host;
+
+        void ConfigureHealthCheckEndpoints(IEndpointRouteBuilder endpoints)
+        {
+            endpoints.MapHealthChecks(
+                    "/healthz",
+                    new HealthCheckOptions
+                    {
+                        ResponseWriter = new HealthCheckReportFormatter(reportFormatOptions).WriteDetailedReport,
+                    })
+                .WithOpenApi<string>();
+        }
     }
 
     private static void ConfigureDefaultJsonSerializerOptions(JsonSerializerOptions jsonSerializerOptions)
