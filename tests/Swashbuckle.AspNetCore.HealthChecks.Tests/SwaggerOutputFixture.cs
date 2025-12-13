@@ -30,9 +30,15 @@ public class SwaggerOutputFixture
         var contentStream = await response.Content.ReadAsStreamAsync();
         var document = await JsonDocument.ParseAsync(contentStream);
 
+#if NET10_0_OR_GREATER
         var expectedFileName = Path.Join(
             AppDomain.CurrentDomain.SetupInformation.ApplicationBase,
-            "TestSupportFiles/standard-config.json");
+            "TestSupportFiles/standard-config-net10.json");
+#else
+        var expectedFileName = Path.Join(
+            AppDomain.CurrentDomain.SetupInformation.ApplicationBase,
+            "TestSupportFiles/standard-config-net8.json");
+#endif
         await using var stream = File.OpenRead(expectedFileName);
         using var expectedDoc = await JsonDocument.ParseAsync(stream);
         document.RootElement.Should().BeEquivalentTo(expectedDoc.RootElement);
