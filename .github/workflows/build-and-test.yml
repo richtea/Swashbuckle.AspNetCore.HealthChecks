@@ -37,9 +37,8 @@ jobs:
       uses: actions/setup-dotnet@v3
       with:	
         dotnet-version: | 
-          3.1.x
-          6.0.x
-          7.0.x
+          8.0.x
+          9.0.x
 
     - name: Restore dependencies
       run: |
@@ -88,7 +87,7 @@ jobs:
         ls ${{ env.PACKAGE_PATH }}/*.nupkg | xargs dotnet tool run meziantou.validate-nuget-package
 
     - name: Upload nupkg artifact
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v6
       with:
         name: ${{ env.NUPKG_ARTIFACT_NAME }}
         if-no-files-found: error
