@@ -7,6 +7,7 @@
         <DebugType>embedded</DebugType>
         <IsPackable>true</IsPackable>
         <LangVersion>latest</LangVersion>
+        <EnableNETAnalyzers>true</EnableNETAnalyzers>
     </PropertyGroup>
 
     <PropertyGroup>
