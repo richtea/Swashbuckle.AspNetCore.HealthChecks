@@ -1,5 +1,5 @@
 {
-  "openapi": "3.0.1",
+  "openapi": "3.0.4",
   "info": {
     "title": "Health Checks",
     "version": "1.0"
@@ -12,7 +12,7 @@
         ],
         "responses": {
           "200": {
-            "description": "Success",
+            "description": "OK",
             "content": {
               "application/json": {
                 "schema": {
@@ -22,7 +22,7 @@
             }
           },
           "503": {
-            "description": "Server Error",
+            "description": "Service Unavailable",
             "content": {
               "application/json": {
                 "schema": {
@@ -35,5 +35,6 @@
       }
     }
   },
-  "components": { }
+  "components": { },
+  "tags": [{ "name": "HealthChecks" }]
 }

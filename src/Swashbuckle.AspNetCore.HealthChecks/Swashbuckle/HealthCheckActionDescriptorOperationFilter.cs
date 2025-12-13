@@ -1,5 +1,9 @@
 ﻿using System.Diagnostics.CodeAnalysis;
+#if NET10_0_OR_GREATER
+using Microsoft.OpenApi;
+#else
 using Microsoft.OpenApi.Models;
+#endif
 using Swashbuckle.AspNetCore.HealthChecks.ApiExplorer;
 using Swashbuckle.AspNetCore.SwaggerGen;
 

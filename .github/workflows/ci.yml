@@ -18,9 +18,10 @@ jobs:
 
     - name: Get current version from changelog
       id: get_current_version
-      uses: release-flow/keep-a-changelog-action/get-release-info@v1
+      uses: release-flow/keep-a-changelog-action@v2
       with:
-        release-version: latest-or-unreleased
+        command: get-release-info
+        version: latest-or-unreleased
 
     - name: Parse current version number
       uses: madhead/semver-utils@latest

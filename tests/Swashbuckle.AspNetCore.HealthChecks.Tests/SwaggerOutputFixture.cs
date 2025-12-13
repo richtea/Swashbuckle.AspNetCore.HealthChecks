@@ -11,7 +11,12 @@ using Swashbuckle.AspNetCore.HealthChecks.Tests.Utils;
 
 namespace Swashbuckle.AspNetCore.HealthChecks.Tests;
 
-public class SwaggerTests
+/// <summary>
+/// Provides test fixtures for validating Swagger/OpenAPI document output.
+/// This class defines a series of test cases to ensure that Swagger documents are generated correctly
+/// with default values, customized configurations, document properties, and endpoint descriptions.
+/// </summary>
+public class SwaggerOutputFixture
 {
     [Fact]
     public async Task swagger_contains_default_values()
@@ -25,9 +30,15 @@ public class SwaggerTests
         var contentStream = await response.Content.ReadAsStreamAsync();
         var document = await JsonDocument.ParseAsync(contentStream);
 
+#if NET10_0_OR_GREATER
         var expectedFileName = Path.Join(
             AppDomain.CurrentDomain.SetupInformation.ApplicationBase,
-            "TestSupportFiles/standard-config.json");
+            "TestSupportFiles/standard-config-net10.json");
+#else
+        var expectedFileName = Path.Join(
+            AppDomain.CurrentDomain.SetupInformation.ApplicationBase,
+            "TestSupportFiles/standard-config-net8.json");
+#endif
         await using var stream = File.OpenRead(expectedFileName);
         using var expectedDoc = await JsonDocument.ParseAsync(stream);
         document.RootElement.Should().BeEquivalentTo(expectedDoc.RootElement);
@@ -228,9 +239,7 @@ public class SwaggerTests
                                 // Add services to the container.
                                 services.AddControllers();
 
-#if NET5_0_OR_GREATER
                                 services.AddEndpointsApiExplorer();
-#endif
                                 services.AddSwaggerGen();
                                 services.AddHealthChecks().AddOpenApi(configureOptions);
                             })

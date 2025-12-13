@@ -21,10 +21,11 @@ jobs:
 
     - name: Get latest release info
       id: get-release-info
-      uses: release-flow/keep-a-changelog-action/get-release-info@v1
+      uses: release-flow/keep-a-changelog-action@v2
       with:
-        release-version: latest
-
+        command: get-release-info
+        version: latest-or-unreleased
+  
     - name: Display release notes
       run: |
         echo "${{ steps.get-release-info.outputs.release-notes }}"
