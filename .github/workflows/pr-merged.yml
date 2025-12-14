@@ -13,7 +13,7 @@ jobs:
     # Check this event is a merge of an autorelease PR
     if: github.event.pull_request.merged == true && contains(github.event.pull_request.labels.*.name, 'autorelease')
     outputs:
-      build-version: ${{ steps.get-release-info.outputs.release-version }}
+      build-version: ${{ steps.get-release-info.outputs.version }}
       is-prerelease: '${{ steps.semver_parser.outputs.prerelease && true || false }}'
       release-notes: '${{ steps.get-release-info.outputs.release-notes }}'
     steps:
