@@ -23,7 +23,7 @@ jobs:
       id: get-release-info
       uses: release-flow/keep-a-changelog-action@v2
       with:
-        command: get-release-info
+        command: query
         version: latest-or-unreleased
   
     - name: Display release notes
@@ -36,7 +36,7 @@ jobs:
       with:
         # The PR we are merging should have updated the changelog to set the target release version as the
         # latest version (this happens in prepare-release.yml)
-        version: ${{ steps.get-release-info.outputs.release-version }}
+        version: ${{ steps.get-release-info.outputs.version }}
 
   build:
     if: github.event.pull_request.merged == true && contains(github.event.pull_request.labels.*.name, 'autorelease')
