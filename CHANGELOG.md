@@ -5,7 +5,7 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
-## [1.0.0-alpha.0] - 2025-12-14
+## [Unreleased]
 
 ### Added
 
@@ -34,8 +34,6 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Added
 
 - Initial version
-
-[1.0.0-alpha.0]: https://github.com/richtea/Swashbuckle.AspNetCore.HealthChecks/compare/v0.1.0...v1.0.0-alpha.0
 
 [0.1.0]: https://github.com/richtea/Swashbuckle.AspNetCore.HealthChecks/compare/v0.1.0-beta.0...v0.1.0
 
