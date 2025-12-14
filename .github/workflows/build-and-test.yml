@@ -31,10 +31,10 @@ jobs:
     outputs:
       nupkg-artifact: ${{ steps.output_variables.outputs.nupkg-artifact }}
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
 
     - name: Setup .NET versions
-      uses: actions/setup-dotnet@v3
+      uses: actions/setup-dotnet@v4
       with:	
         dotnet-version: | 
           8.0.x
@@ -88,7 +88,7 @@ jobs:
         ls ${{ env.PACKAGE_PATH }}/*.nupkg | xargs dotnet tool run meziantou.validate-nuget-package
 
     - name: Upload nupkg artifact
-      uses: actions/upload-artifact@v6
+      uses: actions/upload-artifact@v4
       with:
         name: ${{ env.NUPKG_ARTIFACT_NAME }}
         if-no-files-found: error

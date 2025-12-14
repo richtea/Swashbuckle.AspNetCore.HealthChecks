@@ -14,7 +14,7 @@ jobs:
     outputs:
       build-version: ${{ steps.set_build_version.outputs.build-version }}
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
 
     - name: Get current version from changelog
       id: get_current_version
@@ -24,7 +24,7 @@ jobs:
         version: latest-or-unreleased
 
     - name: Parse current version number
-      uses: madhead/semver-utils@latest
+      uses: madhead/semver-utils@v4
       id: semver_parser
       with:
         # Parse the latest release version, or a default value if nothing is released

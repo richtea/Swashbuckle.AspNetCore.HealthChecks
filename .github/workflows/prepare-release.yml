@@ -26,13 +26,13 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
       with:
         ref: ${{ github.head_ref }}
 
     # We need to create a token so that the check workflows can be triggered (if a PR is created by using the default
     # GITHUB_TOKEN then it won't trigger any other workflows, for security reasons).
-    - uses: tibdex/github-app-token@v1
+    - uses: tibdex/github-app-token@v2
       id: generate-token
       with:
         app_id: ${{ secrets.RELEASEBOT_APP_ID }}
@@ -60,7 +60,7 @@ jobs:
 
     - name: Create Pull Request
       id: create-release-pr
-      uses: peter-evans/create-pull-request@v4
+      uses: peter-evans/create-pull-request@v8
       with:
         commit-message: 'chore: Update changelog for release ${{ steps.update-changelog.outputs.release-version }}'
         committer: 'releasebot <noreply@github.com>'
