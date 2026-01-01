@@ -67,7 +67,7 @@ jobs:
         github_api_url: ${{ github.api_url && github.api_url || 'https://api.github.com' }}
 
     - name: Download nupkg artifact
-      uses: actions/download-artifact@v4
+      uses: actions/download-artifact@v7
       with:
         name: ${{ needs.build.outputs.nupkg-artifact }}
         path: ${{ env.ARTIFACT_PATH }}
