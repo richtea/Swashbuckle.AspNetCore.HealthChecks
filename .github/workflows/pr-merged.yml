@@ -17,7 +17,7 @@ jobs:
       is-prerelease: '${{ steps.semver_parser.outputs.prerelease && true || false }}'
       release-notes: '${{ steps.get-release-info.outputs.release-notes }}'
     steps:
-    - uses: actions/checkout@v4
+    - uses: actions/checkout@v6
 
     - name: Get latest release info
       id: get-release-info
