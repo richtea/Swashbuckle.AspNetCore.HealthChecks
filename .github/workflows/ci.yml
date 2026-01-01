@@ -18,7 +18,7 @@ jobs:
 
     - name: Get current version from changelog
       id: get_current_version
-      uses: release-flow/keep-a-changelog-action@v2
+      uses: release-flow/keep-a-changelog-action@v3
       with:
         command: get-release-info
         version: latest-or-unreleased
