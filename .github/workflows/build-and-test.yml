@@ -88,7 +88,7 @@ jobs:
         ls ${{ env.PACKAGE_PATH }}/*.nupkg | xargs dotnet tool run meziantou.validate-nuget-package
 
     - name: Upload nupkg artifact
-      uses: actions/upload-artifact@v4
+      uses: actions/upload-artifact@v6
       with:
         name: ${{ env.NUPKG_ARTIFACT_NAME }}
         if-no-files-found: error
